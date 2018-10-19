@@ -1,5 +1,5 @@
 #
-#Thu Oct 18 22:35:37 CEST 2018
+#Thu Oct 18 22:37:22 CEST 2018
 owner=gvSIG Association
 code=QuickMapExport
 java-version=j1_7
@@ -17,5 +17,6 @@ categories=
 description=Quick map export tool for a view
 owner-url=
 buildNumber=0
+download-url=https\://github.com/gvSIGAssociation/gvsig-desktop-scripting-QuickMapExport/releases/download/1.0.0-0/gvSIG-desktop-2.5.0-QuickMapExport-1.0.0-0-testing-all-all-j1_7.gvspkg
 gvSIG-version=2.5.0
 name=QuickMapExport
