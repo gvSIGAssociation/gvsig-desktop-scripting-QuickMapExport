@@ -1,17 +1,22 @@
 # encoding: utf-8
 
 import gvsig
-from org.gvsig.app import ApplicationLocator
+from gvsig.libs.formpanel import FormPanel
 
+from org.gvsig.app import ApplicationLocator
+from org.gvsig.tools import ToolsLocator
+from org.gvsig.andami import Utilities
+from org.gvsig.andami import PluginServices
+from org.gvsig.tools.swing.api import ToolsSwingLocator
+
+from javax.swing import ButtonGroup
 from java.io import File
 from java.io import FileInputStream
 
-from org.gvsig.tools import ToolsLocator
 
-from org.gvsig.andami import PluginServices
-from org.gvsig.tools.swing.api import ToolsSwingLocator
-import gvsig
-from gvsig.libs.formpanel import FormPanel
+
+
+from gvsig import commonsdialog
 
 def visorPDF(rutaAbsoluta):
     formatManagers = ToolsLocator.getExtensionPointManager().get("HyperLinkAction")
@@ -26,6 +31,27 @@ class QuickMapExport(FormPanel):
     FormPanel.__init__(self,gvsig.getResource(__file__, "quickMapExport.xml"))
     self.txtTitle.setText(gvsig.currentView().getName())
     self.cboFormat.addItem("A4 Horizontal")
+    bg=ButtonGroup()
+    bg.add(self.rbLogo)
+    bg.add(self.rbDefault)
+    bg.add(self.rbImage)
+    self.rbLogo.setSelected(True)
+    self.rbImage_change()
+    self.chbForceScale_change()
+    
+  def btnPath_click(self,*args):
+    ofiled = commonsdialog.openFileDialog(title='', initialPath=None, root=None)
+    if ofiled[0]=='':
+      return
+    else:
+      self.txtPath.setText(ofiled[0])
+    
+  def chbForceScale_change(self,*args):
+    self.txtScale.setEnabled(self.chbForceScale.isSelected())  
+    
+  def rbImage_change(self,*args):
+    self.txtPath.setEnabled(self.rbImage.isSelected())
+    self.btnPath.setEnabled(self.rbImage.isSelected())
   def getQParams(self, *args):
     qparams={
           'format':
@@ -42,7 +68,8 @@ class QuickMapExport(FormPanel):
               {'show':self.chbForceScale.isSelected(),
               'number':float(self.txtScale.getText())},
           'image':
-              {'option':False}
+              {'option':False,
+              'path':self.txtPath.getText()}
     }
     return qparams
   def btnPreview_click(self,*args):
