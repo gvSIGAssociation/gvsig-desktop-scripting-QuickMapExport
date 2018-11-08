@@ -62,7 +62,7 @@ def selfRegister():
   actionManager = PluginsLocator.getActionInfoManager()
   iconTheme = ToolsSwingLocator.getIconThemeManager().getCurrent()
 
-  quickmapexport_icon = File(join(dirname(__file__),"images","quickmapexport.png")).toURI().toURL()
+  quickmapexport_icon = File(gvsig.getResource(__file__,"images","quickmapexport.png")).toURI().toURL()
   iconTheme.registerDefault("scripting.reportbypoint", "action", "tools-quickmapexport", None, quickmapexport_icon)
 
   quickmapexport_extension = QuickMapExportExtension()
