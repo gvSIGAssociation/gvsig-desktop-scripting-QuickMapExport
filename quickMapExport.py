@@ -82,19 +82,31 @@ class QuickMapExport(FormPanel):
     loadQuickMap(qparams)
     
 def main(*args):
-  m = QuickMapExport()
-  m.showTool("_Quick_map_export")
-  #qparams={
-  #        'titleparams': 
-  #            {'name':'Titulo Mapa'},
-  #        'viewparams':
-  #            {'view': gvsig.currentProject().getView("titu1")}
-  #        }
+ # m = QuickMapExport()
+  #m.showTool("_Quick_map_export")
+  qparams={
+          'format':
+              {'type': 'A4 Horizontal'},
+          'titleparams': 
+              {'name':'Titulo Mapa'},
+          'viewparams':
+              {'view': gvsig.currentProject().getView("titu1")},
+          'legend':
+              {'show':True},
+          'grid':
+              {'show':True},
+          'scale':
+              {'show':True,
+              'number':4},
+          'image':
+              {'path': gvsig.getTempFile("gv",".pdf")}
+          }
+  loadQuickMap(qparams)
           
 def loadQuickMap(qparams, preview=False):
     format = qparams['format']['type']
     if format=="A4 Horizontal":
-      templatePath = gvsig.getResource(__file__, "data", "A4Horizontal.gvslt")
+      templatePath = gvsig.getResource(__file__, "data", "A4_Horizontal.gvslt")
     xmlFile = File(templatePath)
     nis = FileInputStream(xmlFile)
     persistenceManager = ToolsLocator.getPersistenceManager()
@@ -116,6 +128,9 @@ def loadQuickMap(qparams, preview=False):
         params = qparams['viewparams']
         print "Params View: ", params
         f.setView(params['view'])
+      elif f.getTag()=="mImage":
+        params = qparams['image']
+        print "Param Image: ", params
     
     ## Open it in gvsig
     p = ApplicationLocator.getManager().getProjectManager().getCurrentProject()

@@ -79,7 +79,7 @@ def selfRegister():
   quickmapexport_action = actionManager.registerAction(quickmapexport_action)
 
   # Añadimos la entrada "Quickinfo" en el menu herramientas
-  application.addMenu(quickmapexport_action, "tools/_QuickExportMap")
+  application.addMenu(quickmapexport_action, "tools/"+i18n.getTranslation("_Quick_export_map"))
   # Añadimos el la accion como un boton en la barra de herramientas "Quickinfo".
   application.addSelectableTool(quickmapexport_action, "QuickExportMap")
 
